@@ -3,9 +3,18 @@ import React, { Component } from "react";
 export default class header extends Component {
   render() {
     return (
-      <div>
-        <h1>Hello World!</h1>
-      </div>
+      <React.Fragment>
+        <header>
+          <nav>
+            <div class="hamburger-menu">
+              <div />
+              <div />
+              <div />
+            </div>
+          </nav>
+          <h1>Map App</h1>
+        </header>
+      </React.Fragment>
     );
   }
 }

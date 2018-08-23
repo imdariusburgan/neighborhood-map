@@ -6,7 +6,7 @@ export default class header extends Component {
       <React.Fragment>
         <header>
           <nav>
-            <div class="hamburger-menu">
+            <div className="hamburger-menu">
               <div />
               <div />
               <div />

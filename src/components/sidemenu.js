@@ -19,6 +19,11 @@ export default class sidemenu extends Component {
             </button>
           </div>
         </div>
+        <div>
+          {this.props.locations.map((location, index) => {
+            return <li key={index}>{location.name}</li>;
+          })}
+        </div>
       </div>
     );
   }

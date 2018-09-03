@@ -4,7 +4,7 @@ export default class header extends Component {
   render() {
     return (
       <React.Fragment>
-        <header>
+        <header className="navbar navbar-dark bg-dark">
           <nav>
             <div className="hamburger-menu">
               <div />
@@ -12,7 +12,7 @@ export default class header extends Component {
               <div />
             </div>
           </nav>
-          <h1>Map App</h1>
+          <h1 className="navbar-brand">Map App</h1>
         </header>
       </React.Fragment>
     );

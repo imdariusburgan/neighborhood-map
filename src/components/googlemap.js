@@ -37,39 +37,6 @@ export class GoogleMap extends Component {
       weight: "100%"
     };
 
-    const locations = [
-      {
-        name: "Tower City",
-        title: "This is Tower City in Cleveland, Ohio",
-        lat: 41.497226,
-        lng: -81.694049
-      },
-      {
-        name: "Quicken Loans Arena",
-        title: "This is Quicken Loans in Cleveland, Ohio",
-        lat: 41.496326,
-        lng: -81.689357
-      },
-      {
-        name: "West Side Market",
-        title: "This is the West Side Market in Cleveland, Ohio",
-        lat: 41.4844955,
-        lng: -81.7031866
-      },
-      {
-        name: "Greater Cleveland Aquarium",
-        title: "This is the Greater Cleveland Aquarium in Cleveland, Ohio",
-        lat: 41.496555,
-        lng: -81.703903
-      },
-      {
-        name: "Cuyahoga Community College",
-        title: "This is the Cuyahoga Community College in Cleveland, Ohio",
-        lat: 41.49409,
-        lng: -81.669852
-      }
-    ];
-
     return (
       <div className="map">
         <Map
@@ -79,7 +46,7 @@ export class GoogleMap extends Component {
           zoom={14}
           initialCenter={{ lat: 41.491076, lng: -81.696053 }}
         >
-          {locations.map((marker, index) => {
+          {this.props.locations.map((marker, index) => {
             return (
               <Marker
                 key={index}

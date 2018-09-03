@@ -8,3 +8,7 @@
 .hideMenu {
   display: none;
 }
+
+.map {
+  height: 420px;
+}

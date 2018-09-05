@@ -43,7 +43,6 @@ export default class homepage extends Component {
   // Show filtered list on header button click
   showOrHideList = () => {
     this.setState({ filteredListOpen: !this.state.filteredListOpen });
-    console.log(this.state.filteredListOpen);
   };
 
   render() {

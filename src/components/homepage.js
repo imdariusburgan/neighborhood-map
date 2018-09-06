@@ -5,7 +5,7 @@ import SideMenu from "../components/sidemenu";
 
 export default class homepage extends Component {
   state = {
-    filteredListOpen: false,
+    filteredListOpen: true,
     locations: [
       {
         name: "Tower City",
@@ -40,9 +40,20 @@ export default class homepage extends Component {
     ]
   };
 
-  // Show filtered list on header button click
+  // Show or hide filtered list on header button click
   showOrHideList = () => {
     this.setState({ filteredListOpen: !this.state.filteredListOpen });
+  };
+
+  // Check if the text from the input field (filterText) is present in the name of a location. If so, return it.
+  filterList = filterText => {
+    let filteredLocations = this.state.locations.filter(location => {
+      if (location.name.includes(filterText)) {
+        console.log(`${filterText} is true`);
+        return location;
+      }
+    });
+    this.setState({ locations: filteredLocations });
   };
 
   render() {
@@ -54,6 +65,9 @@ export default class homepage extends Component {
           <SideMenu
             displayMenu={this.state.filteredListOpen}
             locations={this.state.locations}
+            onchange={filterText => {
+              this.filterList(filterText);
+            }}
           />
         </div>
       </React.Fragment>

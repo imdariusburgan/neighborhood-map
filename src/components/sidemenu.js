@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import FilterForm from "../components/filterform";
 
 export default class sidemenu extends Component {
+  filterMarkers = text => {
+    this.props.onchange(text);
+  };
+
   render() {
     return (
       <div
@@ -10,7 +14,11 @@ export default class sidemenu extends Component {
         }
       >
         <h2 className="pt-4">Cleveland Locations</h2>
-        <FilterForm />
+        <FilterForm
+          onchange={text => {
+            this.filterMarkers(text);
+          }}
+        />
         <div>
           <ul className="list-unstyled">
             {this.props.locations.map((location, index) => {

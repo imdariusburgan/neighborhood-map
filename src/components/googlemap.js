@@ -9,12 +9,8 @@ export class GoogleMap extends Component {
     animation: null
   };
 
-  markerHighlight = marker => {
-    console.log(marker);
-  };
-
+  // This function will show a marker's info window when clicked
   onMarkerClick = (props, marker, e) => {
-    this.markerHighlight(marker);
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -22,6 +18,7 @@ export class GoogleMap extends Component {
     });
   };
 
+  // This function will hide a marker's info window when the map is clicked
   onMapClicked = props => {
     if (this.state.showingInfoWindow) {
       this.setState({

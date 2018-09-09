@@ -12,14 +12,12 @@ export default class filterform extends Component {
     let inputQuery = e.target.value;
     this.setState({ inputText: inputQuery });
     this.passFilterText(inputQuery);
-    console.log("onInputChange function is working");
   };
 
   // This function passes the value from the input field
   // to this component's onChange property
   passFilterText = inputText => {
     this.props.onchange(inputText);
-    console.log("passFilterText function is working");
   };
 
   render() {

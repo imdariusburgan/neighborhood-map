@@ -6,8 +6,7 @@ import SideMenu from "../components/sidemenu";
 export default class homepage extends Component {
   state = {
     filteredListOpen: true,
-    AllLocations: [],
-    FilteredLocations: []
+    Locations: []
   };
 
   componentDidMount() {
@@ -17,7 +16,7 @@ export default class homepage extends Component {
   loadLocations = () => {
     const places = this.props.locations;
     this.setState({
-      AllLocations: places
+      Locations: places
     });
   };
 
@@ -26,16 +25,19 @@ export default class homepage extends Component {
     this.setState({ filteredListOpen: !this.state.filteredListOpen });
   };
 
-  // Check if the text from the input field (filterText) is present in the name of a location. If so, return it.
+  // Check if the text from the input field (filterText) is present in the name of a location.
   filterList = filterText => {
-    const allLocations = this.state.AllLocations;
-    let filteredLocations = allLocations.filter(location => {
-      if (location.name.toLowerCase().includes(filterText.toLowerCase())) {
-        return location;
-      }
-    });
-    console.log(this.state.locations);
-    this.setState({ FilteredLocations: filteredLocations });
+    if (filterText.length > 0) {
+      this.setState({
+        Locations: this.props.locations.filter(location => {
+          return location.name
+            .toLowerCase()
+            .includes(filterText.trim().toLowerCase());
+        })
+      });
+    } else {
+      this.setState({ Locations: this.props.locations });
+    }
   };
 
   render() {
@@ -43,15 +45,10 @@ export default class homepage extends Component {
       <React.Fragment>
         <div>
           <Header onMenuClick={this.showOrHideList} />
-          <GoogleMaps
-            className="map"
-            filteredlocations={this.state.FilteredLocations}
-            locations={this.state.AllLocations}
-          />
+          <GoogleMaps className="map" locations={this.state.Locations} />
           <SideMenu
             displayMenu={this.state.filteredListOpen}
-            locations={this.state.AllLocations}
-            filteredlocations={this.state.FilteredLocations}
+            locations={this.state.Locations}
             onchange={filterText => {
               this.filterList(filterText);
             }}

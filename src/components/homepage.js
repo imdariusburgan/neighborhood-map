@@ -6,38 +6,19 @@ import SideMenu from "../components/sidemenu";
 export default class homepage extends Component {
   state = {
     filteredListOpen: true,
-    locations: [
-      {
-        name: "Tower City",
-        title: "This is Tower City in Cleveland, Ohio",
-        lat: 41.497226,
-        lng: -81.694049
-      },
-      {
-        name: "Quicken Loans Arena",
-        title: "This is Quicken Loans in Cleveland, Ohio",
-        lat: 41.496326,
-        lng: -81.689357
-      },
-      {
-        name: "West Side Market",
-        title: "This is the West Side Market in Cleveland, Ohio",
-        lat: 41.4844955,
-        lng: -81.7031866
-      },
-      {
-        name: "Greater Cleveland Aquarium",
-        title: "This is the Greater Cleveland Aquarium in Cleveland, Ohio",
-        lat: 41.496555,
-        lng: -81.703903
-      },
-      {
-        name: "Cuyahoga Community College",
-        title: "This is the Cuyahoga Community College in Cleveland, Ohio",
-        lat: 41.49409,
-        lng: -81.669852
-      }
-    ]
+    AllLocations: [],
+    FilteredLocations: []
+  };
+
+  componentDidMount() {
+    this.loadLocations();
+  }
+
+  loadLocations = () => {
+    const places = this.props.locations;
+    this.setState({
+      AllLocations: places
+    });
   };
 
   // Show or hide filtered list on header button click
@@ -47,13 +28,14 @@ export default class homepage extends Component {
 
   // Check if the text from the input field (filterText) is present in the name of a location. If so, return it.
   filterList = filterText => {
-    let filteredLocations = this.state.locations.filter(location => {
-      if (location.name.includes(filterText)) {
-        console.log(`${filterText} is true`);
+    const allLocations = this.state.AllLocations;
+    let filteredLocations = allLocations.filter(location => {
+      if (location.name.toLowerCase().includes(filterText.toLowerCase())) {
         return location;
       }
     });
-    this.setState({ locations: filteredLocations });
+    console.log(this.state.locations);
+    this.setState({ FilteredLocations: filteredLocations });
   };
 
   render() {
@@ -61,10 +43,10 @@ export default class homepage extends Component {
       <React.Fragment>
         <div>
           <Header onMenuClick={this.showOrHideList} />
-          <GoogleMaps className="map" locations={this.state.locations} />
+          <GoogleMaps className="map" locations={this.state.AllLocations} />
           <SideMenu
             displayMenu={this.state.filteredListOpen}
-            locations={this.state.locations}
+            locations={this.state.AllLocations}
             onchange={filterText => {
               this.filterList(filterText);
             }}

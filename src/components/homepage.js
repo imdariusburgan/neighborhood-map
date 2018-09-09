@@ -43,10 +43,15 @@ export default class homepage extends Component {
       <React.Fragment>
         <div>
           <Header onMenuClick={this.showOrHideList} />
-          <GoogleMaps className="map" locations={this.state.AllLocations} />
+          <GoogleMaps
+            className="map"
+            filteredlocations={this.state.FilteredLocations}
+            locations={this.state.AllLocations}
+          />
           <SideMenu
             displayMenu={this.state.filteredListOpen}
             locations={this.state.AllLocations}
+            filteredlocations={this.state.FilteredLocations}
             onchange={filterText => {
               this.filterList(filterText);
             }}

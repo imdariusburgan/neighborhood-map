@@ -6,7 +6,8 @@ import SideMenu from "../components/sidemenu";
 export default class homepage extends Component {
   state = {
     filteredListOpen: true,
-    Locations: []
+    Locations: [],
+    clickedListItem: ""
   };
 
   componentDidMount() {
@@ -40,17 +41,28 @@ export default class homepage extends Component {
     }
   };
 
+  listItemClick = item => {
+    this.setState({ clickedListItem: item });
+  };
+
   render() {
     return (
       <React.Fragment>
         <div>
           <Header onMenuClick={this.showOrHideList} />
-          <GoogleMaps className="map" locations={this.state.Locations} />
+          <GoogleMaps
+            className="map"
+            locations={this.state.Locations}
+            selectedLocation={this.state.clickedListItem}
+          />
           <SideMenu
             displayMenu={this.state.filteredListOpen}
             locations={this.state.Locations}
             onchange={filterText => {
               this.filterList(filterText);
+            }}
+            onclick={item => {
+              this.listItemClick(item);
             }}
           />
         </div>

@@ -16,6 +16,7 @@ export class GoogleMap extends Component {
       activeMarker: marker,
       showingInfoWindow: true
     });
+    console.log(this.state.activeMarker);
   };
 
   // This function will hide a marker's info window when the map is clicked
@@ -31,11 +32,11 @@ export class GoogleMap extends Component {
   render() {
     const style = {
       height: "400px",
-      weight: "100%"
+      width: "100%"
     };
 
     return (
-      <div className="map">
+      <div className="map" style={style}>
         <Map
           google={this.props.google}
           onClick={this.onMapClicked}

@@ -12,3 +12,12 @@
 .map {
   height: 400px;
 }
+
+/*.showMenu {
+  z-index: 100;
+}*/
+
+/*Remember to get rid of this once switching to a 2 column layout*/
+#root > div > div > div:nth-child(2) > div.map > div {
+  height: 400px !important;
+}

@@ -6,7 +6,24 @@ export default class sidemenu extends Component {
     this.props.onchange(text);
   };
 
+  handleClick = item => {
+    this.props.onclick(item);
+  };
+
   render() {
+    const renderLocations = this.props.locations.map((location, index) => {
+      return (
+        <li
+          onClick={() => {
+            this.handleClick(location.name);
+          }}
+          key={index}
+        >
+          {location.name}
+        </li>
+      );
+    }, this);
+
     return (
       <div
         className={
@@ -19,13 +36,7 @@ export default class sidemenu extends Component {
             this.filterMarkers(text);
           }}
         />
-        <div>
-          <ul className="list-unstyled">
-            {this.props.locations.map((location, index) => {
-              return <li key={index}>{location.name}</li>;
-            })}
-          </ul>
-        </div>
+        <ul>{renderLocations}</ul>
       </div>
     );
   }

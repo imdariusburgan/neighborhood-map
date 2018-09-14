@@ -6,7 +6,15 @@ export class GoogleMap extends Component {
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
-    animation: null
+    animation: null,
+    selectedListItem: ""
+  };
+
+  checkClickedListItem = () => {
+    if (this.props.selectedLocation !== "") {
+      this.setState({ selectedListItem: this.props.selectedLocation });
+      console.log(this.props.selectedLocation);
+    }
   };
 
   // This function will show a marker's info window when clicked
@@ -16,6 +24,7 @@ export class GoogleMap extends Component {
       activeMarker: marker,
       showingInfoWindow: true
     });
+    console.log(marker);
   };
 
   // This function will hide a marker's info window when the map is clicked

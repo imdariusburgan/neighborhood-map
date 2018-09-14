@@ -15,9 +15,8 @@ export default class homepage extends Component {
   }
 
   loadLocations = () => {
-    const places = this.props.locations;
     this.setState({
-      Locations: places
+      Locations: this.props.locations
     });
   };
 

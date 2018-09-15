@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
 export class GoogleMap extends Component {
-  state = {
-    showingInfoWindow: false,
-    activeMarker: {},
-    selectedPlace: {},
-    animation: null,
-    selectedListItem: ""
-  };
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+    this.state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
+      animation: null,
+      selectedListItem: ""
+    };
+  }
 
   checkClickedListItem = () => {
     if (this.props.selectedLocation !== "") {
@@ -25,6 +29,7 @@ export class GoogleMap extends Component {
       showingInfoWindow: true
     });
     console.log(marker);
+    console.log(this.myRef);
   };
 
   // This function will hide a marker's info window when the map is clicked
@@ -56,6 +61,7 @@ export class GoogleMap extends Component {
             return (
               <Marker
                 key={index}
+                ref={this.myRef}
                 onClick={this.onMarkerClick}
                 name={marker.name}
                 title={marker.title}

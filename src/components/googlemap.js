@@ -14,10 +14,19 @@ export class GoogleMap extends Component {
     };
   }
 
+  getSnapshotBeforeUpdate() {
+    this.checkClickedListItem();
+  }
+
+  componentDidUpdate() {
+    return null;
+  }
+
   checkClickedListItem = () => {
     if (this.props.selectedLocation !== "") {
-      this.setState({ selectedListItem: this.props.selectedLocation });
-      console.log(this.props.selectedLocation);
+      if (this.props.selectedLocation === this.myRef.current.props.name) {
+        console.log("This is working right");
+      }
     }
   };
 

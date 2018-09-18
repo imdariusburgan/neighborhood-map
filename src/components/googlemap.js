@@ -14,17 +14,14 @@ export class GoogleMap extends Component {
     };
   }
 
-  getSnapshotBeforeUpdate() {
-    this.checkClickedListItem();
-  }
-
   componentDidUpdate() {
-    return null;
+    console.log(this.myRef);
+    // this.checkClickedListItem();
   }
 
   checkClickedListItem = () => {
     if (this.props.selectedLocation !== "") {
-      if (this.props.selectedLocation === this.myRef.current.props.name) {
+      if (this.props.selectedLocation === this.myRef.marker.name) {
         console.log("This is working right");
       }
     }
@@ -38,7 +35,8 @@ export class GoogleMap extends Component {
       showingInfoWindow: true
     });
     console.log(marker);
-    console.log(this.myRef);
+    // console.log(this.myRef);
+    // console.log(this.myRef.current.marker.name);
   };
 
   // This function will hide a marker's info window when the map is clicked
@@ -70,7 +68,7 @@ export class GoogleMap extends Component {
             return (
               <Marker
                 key={index}
-                ref={this.myRef}
+                ref={marker.name}
                 onClick={this.onMarkerClick}
                 name={marker.name}
                 title={marker.title}

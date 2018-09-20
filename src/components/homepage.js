@@ -1,3 +1,6 @@
+// TO-DO ITEMS:
+// - Figure out why when a list item is first clicked, the map marker does not highlight + why a list item must be clicked twice in order to highlight map marker
+
 import React, { Component } from "react";
 import GoogleMaps from "../components/googlemap";
 import Header from "../components/header";

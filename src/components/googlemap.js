@@ -48,7 +48,7 @@ export class GoogleMap extends Component {
                 }}
                 animation={
                   this.props.activeMarker
-                    ? marker.name === this.props.activeMarker
+                    ? marker.name === this.props.activeMarker.name
                       ? this.props.google.maps.Animation.BOUNCE
                       : null
                     : null

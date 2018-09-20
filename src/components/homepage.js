@@ -49,14 +49,19 @@ export default class homepage extends Component {
       activeMarker: marker,
       showingInfoWindow: true
     });
+    console.log(marker);
   };
 
   checkClickedListItem = () => {
-    if (this.state.selectedLocation !== "") {
-      this.myRef.map((marker, index) => {
-        if (this.state.selectedLocation === marker.marker.name) {
-          console.log("hi");
-        }
+    if (this.state.clickedListItem !== "") {
+      this.myRef.map(marker => {
+        return this.state.clickedListItem === marker.props.name
+          ? this.setState({
+              activeMarker: marker.marker,
+              selectedPlace: marker.props,
+              showInfoWindow: true
+            })
+          : null;
       });
     }
   };
@@ -82,7 +87,8 @@ export default class homepage extends Component {
   };
 
   listItemClick = item => {
-    this.setState({ clickedListItem: item });
+    this.setState({ clickedListItem: item, activeMarker: {} });
+    this.checkClickedListItem();
   };
 
   render() {

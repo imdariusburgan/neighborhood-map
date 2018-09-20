@@ -4,20 +4,61 @@ import Header from "../components/header";
 import SideMenu from "../components/sidemenu";
 
 export default class homepage extends Component {
-  state = {
-    filteredListOpen: true,
-    Locations: [],
-    clickedListItem: ""
-  };
+  constructor(props) {
+    super(props);
+    this.myRef = [];
+    this.state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
+      animation: null,
+      selectedListItem: "",
+      filteredListOpen: true,
+      Locations: []
+    };
+  }
 
   componentDidMount() {
     this.loadLocations();
   }
 
+  setRef = marker => {
+    this.myRef.push(marker);
+  };
+
   loadLocations = () => {
     this.setState({
       Locations: this.props.locations
     });
+  };
+
+  // This function will hide a marker's info window when the map is clicked
+  onMapClicked = props => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
+  };
+
+  // This function will show a marker's info window when clicked
+  onMarkerClick = (props, marker, e) => {
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+  };
+
+  checkClickedListItem = () => {
+    if (this.state.selectedLocation !== "") {
+      this.myRef.map((marker, index) => {
+        if (this.state.selectedLocation === marker.marker.name) {
+          console.log("hi");
+        }
+      });
+    }
   };
 
   // Show or hide filtered list on header button click
@@ -53,6 +94,12 @@ export default class homepage extends Component {
             className="map"
             locations={this.state.Locations}
             selectedLocation={this.state.clickedListItem}
+            markerClick={this.onMarkerClick}
+            mapClick={this.onMapClicked}
+            activeMarker={this.state.activeMarker}
+            showInfoWindow={this.state.showingInfoWindow}
+            selectedPlace={this.state.selectedPlace}
+            setRef={this.setRef}
           />
           <SideMenu
             displayMenu={this.state.filteredListOpen}

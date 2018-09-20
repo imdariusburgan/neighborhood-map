@@ -4,10 +4,10 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 export class GoogleMap extends Component {
   constructor(props) {
     super(props);
-    this.myRef = React.createRef();
+    this.myRef = [];
     this.state = {
       showingInfoWindow: false,
-      activeMarker: {},
+      activeMarker: this.props.activeMarker,
       selectedPlace: {},
       animation: null,
       selectedListItem: ""
@@ -15,39 +15,9 @@ export class GoogleMap extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.myRef);
+    // console.log(this.myRef);
     // this.checkClickedListItem();
   }
-
-  checkClickedListItem = () => {
-    if (this.props.selectedLocation !== "") {
-      if (this.props.selectedLocation === this.myRef.marker.name) {
-        console.log("This is working right");
-      }
-    }
-  };
-
-  // This function will show a marker's info window when clicked
-  onMarkerClick = (props, marker, e) => {
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
-    console.log(marker);
-    // console.log(this.myRef);
-    // console.log(this.myRef.current.marker.name);
-  };
-
-  // This function will hide a marker's info window when the map is clicked
-  onMapClicked = props => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
-    }
-  };
 
   render() {
     const style = {
@@ -59,7 +29,7 @@ export class GoogleMap extends Component {
       <div className="map">
         <Map
           google={this.props.google}
-          onClick={this.onMapClicked}
+          onClick={this.props.mapClick}
           style={style}
           zoom={14}
           initialCenter={{ lat: 41.491076, lng: -81.696053 }}
@@ -68,8 +38,8 @@ export class GoogleMap extends Component {
             return (
               <Marker
                 key={index}
-                ref={marker.name}
-                onClick={this.onMarkerClick}
+                ref={this.props.setRef}
+                onClick={this.props.markerClick}
                 name={marker.name}
                 title={marker.title}
                 position={{
@@ -77,8 +47,8 @@ export class GoogleMap extends Component {
                   lng: marker.lng
                 }}
                 animation={
-                  this.state.activeMarker
-                    ? marker.name === this.state.activeMarker.name
+                  this.props.activeMarker
+                    ? marker.name === this.props.activeMarker
                       ? this.props.google.maps.Animation.BOUNCE
                       : null
                     : null
@@ -87,11 +57,11 @@ export class GoogleMap extends Component {
             );
           })}
           <InfoWindow
-            marker={this.state.activeMarker}
-            visible={this.state.showingInfoWindow}
+            marker={this.props.activeMarker}
+            visible={this.props.showInfoWindow}
           >
             <div>
-              <h1>{this.state.selectedPlace.name}</h1>
+              <h1>{this.props.selectedPlace.name}</h1>
             </div>
           </InfoWindow>
         </Map>

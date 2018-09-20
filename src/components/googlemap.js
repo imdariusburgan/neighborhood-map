@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
 export class GoogleMap extends Component {
-  constructor(props) {
+  /*  constructor(props) {
     super(props);
     this.myRef = [];
     this.state = {
@@ -12,7 +12,7 @@ export class GoogleMap extends Component {
       animation: null,
       selectedListItem: ""
     };
-  }
+  }*/
 
   componentDidUpdate() {
     // console.log(this.myRef);
@@ -61,7 +61,7 @@ export class GoogleMap extends Component {
             visible={this.props.showInfoWindow}
           >
             <div>
-              <h1>{this.props.selectedPlace.name}</h1>
+              <h1>{this.props.activeMarker.name}</h1>
             </div>
           </InfoWindow>
         </Map>

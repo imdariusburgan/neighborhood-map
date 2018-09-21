@@ -1,5 +1,6 @@
 // TO-DO ITEMS:
 // - Figure out why when a list item is first clicked, the map marker does not highlight + why a list item must be clicked twice in order to highlight map marker
+// - Figure out why when a marker is clicked, if you click the map, errors are then logged
 
 import React, { Component } from "react";
 import GoogleMaps from "../components/googlemap";
@@ -14,24 +15,39 @@ export default class homepage extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      animation: null,
       selectedListItem: "",
       filteredListOpen: true,
       Locations: []
     };
   }
 
+  // This lifecyle events triggers the loadLocations function
   componentDidMount() {
     this.loadLocations();
   }
 
+  // This function sets the state with all locations
+  loadLocations = () => {
+    this.setState({
+      Locations: this.props.locations
+    });
+  };
+
+  // This function pushes a reference to each marker on the map to the myRef variable
   setRef = marker => {
     this.myRef.push(marker);
   };
 
-  loadLocations = () => {
+  /*************************************************************
+   *  ALL FUNCTIONS FOR CHANGING THE MAP ARE LISTED HERE
+   *************************************************************/
+
+  // This function will show a marker's info window when clicked
+  onMarkerClick = (props, marker) => {
     this.setState({
-      Locations: this.props.locations
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
     });
   };
 
@@ -40,33 +56,32 @@ export default class homepage extends Component {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null
+        activeMarker: {}
       });
     }
   };
 
-  // This function will show a marker's info window when clicked
-  onMarkerClick = (props, marker, e) => {
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
-    console.log(marker);
-  };
-
+  // This function checks to see if there is a marker reference matching the clicked list item. If so, display the marker's animation
   checkClickedListItem = () => {
-    if (this.state.clickedListItem !== "") {
+    new Promise(resolve => {
+      if (this.state.clickedListItem !== "" && this.myRef.length > 0) {
+        resolve();
+      }
+    }).then(() => {
       this.myRef.map(marker => {
-        return this.state.clickedListItem === marker.props.name
-          ? this.setState({
-              activeMarker: marker.marker,
-              selectedPlace: marker.props,
-              showInfoWindow: true
-            })
-          : null;
+        if (this.state.clickedListItem === marker.marker.name) {
+          // this.setState({
+          //   activeMarker: marker.marker,
+          //   selectedPlace: marker.props,
+          //   showingInfoWindow: true
+          // });
+          console.log(marker.props);
+          console.log(marker.marker);
+          this.onMarkerClick(marker.props, marker.marker);
+        }
+        return null;
       });
-    }
+    });
   };
 
   // Show or hide filtered list on header button click
@@ -90,8 +105,12 @@ export default class homepage extends Component {
   };
 
   listItemClick = item => {
-    this.setState({ clickedListItem: item, activeMarker: {} });
-    this.checkClickedListItem();
+    new Promise(resolve => {
+      this.setState({ clickedListItem: item });
+      resolve();
+    }).then(() => {
+      this.checkClickedListItem();
+    });
   };
 
   render() {

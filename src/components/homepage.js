@@ -1,6 +1,5 @@
 // TO-DO ITEMS:
-// - Figure out why when a list item is first clicked, the map marker does not highlight + why a list item must be clicked twice in order to highlight map marker
-// - Figure out why when a marker is clicked, if you click the map, errors are then logged
+// - Move info window up in the map to avoid covering up map marker when active
 
 import React, { Component } from "react";
 import GoogleMaps from "../components/googlemap";

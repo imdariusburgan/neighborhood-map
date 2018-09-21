@@ -9,14 +9,14 @@ import SideMenu from "../components/sidemenu";
 export default class homepage extends Component {
   constructor(props) {
     super(props);
-    this.myRef = [];
     this.state = {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
       selectedListItem: "",
       filteredListOpen: true,
-      Locations: []
+      Locations: [],
+      markerRef: []
     };
   }
 
@@ -34,7 +34,9 @@ export default class homepage extends Component {
 
   // This function pushes a reference to each marker on the map to the myRef variable
   setRef = marker => {
-    this.myRef.push(marker);
+    let prevMarkerRef = this.state.markerRef;
+    prevMarkerRef.push(marker);
+    this.setState({markerRef: prevMarkerRef})
   };
 
   /*************************************************************
@@ -63,19 +65,13 @@ export default class homepage extends Component {
   // This function checks to see if there is a marker reference matching the clicked list item. If so, display the marker's animation
   checkClickedListItem = () => {
     new Promise(resolve => {
-      if (this.state.clickedListItem !== "" && this.myRef.length > 0) {
+      if (this.state.clickedListItem !== "" && this.state.markerRef.length > 0) {
         resolve();
       }
     }).then(() => {
-      this.myRef.map(marker => {
+      this.state.markerRef.map(marker => {
         if (this.state.clickedListItem === marker.marker.name) {
-          // this.setState({
-          //   activeMarker: marker.marker,
-          //   selectedPlace: marker.props,
-          //   showingInfoWindow: true
-          // });
-          console.log(marker.props);
-          console.log(marker.marker);
+          console.log(this.state.markerRef)
           this.onMarkerClick(marker.props, marker.marker);
         }
         return null;
